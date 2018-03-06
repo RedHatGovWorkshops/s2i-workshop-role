@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Kenneth D. Evensen
+  description: S2I Workshop Role
+  company: Red Hat, Inc.
+
+
+  license: GPLv3
+
+  min_ansible_version: 2.4
+
+
+  galaxy_tags: []
+
+
+dependencies: []

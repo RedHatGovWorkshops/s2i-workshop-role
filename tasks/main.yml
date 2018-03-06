@@ -1,0 +1,26 @@
+---
+# tasks file for containerized-wetty-deployer
+- name: s2i-workshop - Login via OpenShift CLI as system:admin
+  shell: "oc login -u system:admin"
+
+- name: s2i-workshop - Create Project
+  shell: "oc new-project {{ server_project }}"
+  ignore_errors: true
+
+- name: s2i-workshop - Create golang-s2i builder
+  shell: "oc new-build {{ golang_s2i_repo }} --to=golang-s2i"
+  ignore_errors: true
+
+- name: s2i-workshop - Create openshift-gochat-server Components
+  shell: "oc process -f {{ golang_template }} -p APP_ARGS='-logtostderr -host :8080' -p APP_SOURCE_REPOSITORY_URL={{ gochat_server_repo }} -p APPLICATION_NAME=gochat-server | oc create -f -"
+  ignore_errors: true
+
+- name: s2i-workshop - Delete Route
+  shell: "oc delete route gochat-server"
+  when: internal_chat_traffic
+  ignore_errors: true
+
+- name: s2i-workshop - Make {{ server_project }} Globally Accessible
+  shell: "oc adm pod-network make-projects-global gochat-server"
+  when: internal_chat_traffic
+  ignore_errors: true

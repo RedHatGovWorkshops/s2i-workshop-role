@@ -1,0 +1,12 @@
+---
+# defaults file for s2i-workshop-configure-role
+# The project in which to deploy the gochat-server
+server_project: gochat-server
+# The Golang S2I repo
+golang_s2i_repo: https://github.com/RedHatGovWorkshops/golang-s2i
+# The Golang Template
+golang_template: https://raw.githubusercontent.com/RedHatGovWorkshops/golang-s2i/master/templates/golang.yml
+# The Gochat server repository
+gochat_server_repo: https://github.com/RedHatGovWorkshops/openshift-gochat-server
+# Keep all chat traffic internal
+internal_chat_traffic: yes
